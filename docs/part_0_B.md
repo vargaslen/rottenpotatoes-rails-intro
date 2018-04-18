@@ -46,13 +46,13 @@ Podemos obtener una pista de por qué ejecutando el siguiente comando:
 $ heroku logs
 ```
 
-which will show an error like:
+Que mostrará un error como:
 
 ```
 ActionView::Template::Error (PG::UndefinedTable: ERROR:  relation "movies" does not exist
 ```
 
-Just as we ran `rake db:migrate` and `rake db:seed` to do first-time database creation locally, we must also cause a database to be created on the Heroku side:
+Del mismo modo que ejecutamos `rake db: migrate` y` rake db: seed` para crear localmente la base de datos por primera vez, también debemos crear una base de datos en el lado de Heroku:
 
 ```sh
 $ heroku run rake db:migrate
@@ -64,8 +64,4 @@ and
 $ heroku run rake db:seed
 ```
 
-Now you should be able to navigate to your app's URL.  `heroku open` opens your browser to that URL in case you forgot it, however this command does not work on c9, where you will need to navigate to the relevant URL.
-
-**Note:** don't proceed past this point until you are able to complete the above successfully, or you won't be able to receive a grade for this assignment!
-
-Next: [Part 1: Sort the list of movies](part_1.md)
+Ahora deberías poder navegar a la URL de tu aplicación (prueba con:heroku open).
