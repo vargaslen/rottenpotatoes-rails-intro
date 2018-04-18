@@ -1,39 +1,46 @@
+## Parte 0 (B): Preparación: implementar en Heroku
 
-## Part 0 (B): Preparation: deploy to Heroku
+Si ya se ha desplegado en Heroku, simplemente crear un nuevo contenedor de aplicaciones con `heroku create`. Si esta es la primera vez que se despliega en Heroku, tendrás que hacer dos cosas. Primero, regístrarte para obtener una cuenta gratuita de Heroku  (http://heroku.com). A continuación, configura las claves `ssh` para comunicarse de forma segura con Heroku para implementar aplicaciones. Los tres comandos básicos que necesitas son los siguientes, pero consula la página de Heroku: (https://devcenter.heroku.com/articles/heroku-cli) para obtener más detalles.
 
-If you have deployed to Heroku before, just create a new app container with `heroku create`.  If this is your first time deploying to Heroku, you will need to do two things.  First, sign up for a free [Heroku account](http://heroku.com).  Then set up `ssh` keys to securely communicate with Heroku for app deployments.  The three basic commands you need are the following, but see the [Heroku page](https://devcenter.heroku.com/articles/heroku-cli) for more details.
 
 ```sh
 $ ssh-keygen -t rsa
 $ heroku login
 $ heroku keys:add
 ```
+Una vez que las claves estén configuradas (un proceso único), debería poder crear un "contenedor de aplicaciones" en Heroku en el que desplegará RottenPotatoes:
 
-Once your keys are set up (a one-time process), you should be able to create an "app container" on Heroku into which you'll deploy RottenPotatoes:
+
 
 ```sh
 $ heroku create
 ```
 
-Heroku will assign your app a whimsical name such as `luminous-coconut-237`; once your app is deployed, you would access it at `http://luminous-coconut-237.herokuapp.com`.  You can login to the Heroku website if you want to change the name of your app.
+Heroku le asignará a tu aplicación un nombre caprichoso como `luminous-coco-237`; una vez que se implemente tu aplicación, podrás acceder a ella en `http: // luminous-coco-237.herokuapp.com`. Puedes iniciar sesión en el sitio web de Heroku si deseas cambiar el nombre de tu aplicación.
 
-Finally, we deploy our app to Heroku:
+
+Finalmente, implementamos nuestra aplicación en Heroku:
+
+
 
 ```sh
 $ git push heroku master
 ```
 
-(You may see the  following warning the first time - it's fine---answer
-"yes", and in the future you shouldn't see it anymore:)
 
-    The authenticity of host 'heroku.com (50.19.85.132)' can't be established.
-    RSA key fingerprint is 8b:48:5e:67:0e:c9:16:47:32:f2:87:0c:1f:c8:60:ad.
-    Are you sure you want to continue connecting (yes/no)? 
-    Please type 'yes' or 'no':
+(Podrías ver la siguiente advertencia la primera vez - está bien --- contesta con un
+"sí", y en el futuro no deberías verlo más :)
 
-Is the app running on Heroku?  If you navigate to the heroku URL that is printed at the end of the results from `git push heroku master` you'll get a "We're sorry, but something went wrong." error in the browser.  
+     La autenticidad del servidor 'heroku.com (50.19.85.132)' no se puede establecer.
+     La huella dactilar de la clave RSA es 8b: 48: 5e: 67: 0e: c9: 16: 47: 32: f2: 87: 0c: 1f: c8: 60: ad.
+     ¿Estás seguro de que quieres continuar conectando (sí / no)?
+     Por favor, escriba 'sí' o 'no':
 
-We can get a hint as to why by running the following command:
+¿La aplicación se está ejecutando en Heroku? Si navegas a la URL heroku que se imprime al final de los resultados de `git push heroku master`, obtendrá un mensaje" Lo sentimos, pero algo salió mal ". error en el navegador.
+
+Podemos obtener una pista de por qué ejecutando el siguiente comando:
+
+
 
 ```sh
 $ heroku logs
