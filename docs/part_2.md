@@ -1,12 +1,12 @@
-## Part 2: Filter the list of movies by rating (15 points)
+## Parte 2: filtrar la lista de películas por calificación
 
-Enhance RottenPotatoes as follows. At the top of the All Movies listing, add some checkboxes that allow the user to filter the list to show only movies with certain MPAA ratings: 
+Mejora RottenPotatoes de la siguiente manera. En la parte superior de la lista de Todas las películas, agrega algunas casillas de verificación (checkboxes) que le permitan al usuario filtrar la lista para mostrar solo películas con ciertas clasificaciones:
 
-![](https://github.com/saasbook/hw-rails-intro/blob/master/filter-screenshot.png)
+(https://github.com/saasbook/hw-rails-intro/blob/master/filter-screenshot.png)
 
-When the Refresh button is pressed, the list of movies is redisplayed showing only those movies whose ratings were checked. 
+Cuando se presione el botón Actualizar, se vuelve a mostrar la lista de películas con solo aquellas  cuyas clasificaciones fueron marcadas.
 
-This will require a couple of pieces of code. We have provided the code that generates the checkboxes form, which you can include in the index.html.haml template: 
+Esto requerirá un par de piezas de código. Proporcionamos el código que genera el formulario de casillas de verificación (checkboxes), que puedes incluir en la plantilla index.html.haml:
 
 ```haml
 = form_tag movies_path, :method => :get do
@@ -16,39 +16,31 @@ This will require a couple of pieces of code. We have provided the code that gen
     = check_box_tag "ratings[#{rating}]"
   = submit_tag 'Refresh'
 ```
+PERO, tienes que trabajar un poco para usar el código anterior: como puedes ver, se espera que la variable `@all_ratings` contenga una colección enumerable de todos los valores posibles para una clasificación de películas, tales como: ['G' , 'PG', 'PG-13', 'R'] . Un método del controlador necesita configurar esta variable. Y dado que los valores posibles de las clasificaciones de películas son realmente responsabilidad del modelo de película, es mejor si el controlador establece esta variable consultando el modelo. Por lo tanto, debes crear un método de clase: `Movie` que devuelva un valor apropiado para esta colección.
 
-BUT, you have to do a bit of work to use the above code: as you can see, it expects the variable `@all_ratings` to be an enumerable collection of all possible values of a movie rating, such as `['G','PG','PG-13','R']`. The controller method needs to set up this variable. And since the possible values of movie ratings are really the responsibility of the Movie model, it's best if the controller sets this variable by consulting the Model. Hence, you should create a class method of `Movie` that returns an appropriate value for this collection. 
+También necesitarás un código que sepa (i) cómo averiguar qué casillas ha marcado el usuario y (ii) cómo restringir la consulta de la base de datos en función de ese resultado.
 
-You will also need code that knows (i) how to figure out which boxes the user checked and (ii) how to restrict the database query based on that result.  
+Con respecto a (i), intenta ver la fuente(source) del listado de películas con el formulario de casillas de verificación (checkbox), y verás que las casillas de verificación tienen nombres de campo como `ratings[G]`, `ratings[PG]`,  etc. Este forma nombrar casillas, causará que Rails agrupe los valores en un solo hash llamado `ratings`, cuyas claves serán los nombres de las casillas marcadas solamente, y cuyos valores serán el atributo de valor de la casilla de verificación (que es" 1 "por default, y así lo dejamos al invocar al ayudante `check_box_tag`). Es decir, si el usuario marca los cuadros ** G ** y ** R **, `params` incluirá el siguiente hash como un elento del hash "params": `:ratings => {"G" => "1", "R" = > "1"} `. Consulta la documentación de 'Hash` para saber como obtener fácilmente las claves(keys) de un hash, ya que no nos importan los valores en este caso (las casillas de verificación que no se marcaron no aparecen en el hash `params` ).
 
-Regarding (i), try viewing the source of the movie listings with the checkbox form, and you'll see that the checkboxes have field names like `ratings[G]`, `ratings[PG]`, etc. This trick will cause Rails to aggregate the values into a single hash called `ratings`, whose keys will be the names of the checked boxes only, and whose values will be the value attribute of the checkbox (which is "1" by default, since we didn't specify another value when calling the `check_box_tag` helper). That is, if the user checks the **G** and **R** boxes, `params` will include as one if its values `:ratings=>{"G"=>"1", "R"=>"1"}`. Check out the `Hash` documentation for an easy way to grab just the keys of a hash, since we don't care about the values in this case (checkboxes that weren't checked don't appear in the `params` hash at all).
+Con respecto a (ii), probablemente termines reemplazando `Movie.all` en el método del controlador con` Movie.where`, que tiene varias opciones para ayudarte a restringir la consulta de la base de datos.
 
-Regarding (ii), you'll probably end up replacing `Movie.all` in the controller method with `Movie.where`, which has various options to help you restrict the database query. 
 
-### IMPORTANT for grading purposes
 
-* Your form tag should have the id `ratings_form`.
-* The form submit button for filtering by ratings should have an HTML
-element id of `ratings_submit` 
-* Each checkbox should have an HTML element id of `ratings_#{rating}`,
-where the interpolated rating should be the rating itself, such as
-`ratings_PG-13`, `ratings_G`, and so on.
+### Consejos y advertencias
 
-### Hints and caveats
+¡Asegúrate de no romper la funcionalidad de ordenar por columna  que se agregó anteriormente! Es decir, el ordenar las películas  por encabezados de columna debería seguir funcionando, y si el usuario hace clic en el encabezado de la columna "Título de película" para ordenar por título de película, los resultados mostrados deben ordenarse pero no deben estar limitados por las calificaciones marcadas (aunque se Llegará a eso en la parte 3).
 
-Make sure that you don't break the sorted-column functionality you added previously! That is, sorting by column headers should still work, and if the user then clicks the "Movie Title" column header to sort by movie title, the displayed results should be sorted but do not need to be limited by the checked ratings (we'll get to that in part 3). 
+Si el usuario marca (digamos) ** G ** y ** PG ** y luego vuelve a mostrar la lista, las casillas de verificación que se utilizaron para filtrar la salida deberían aparecer marcadas cuando se vuelva a mostrar la lista. Esto requerirá que modifiques ligeramente la "forma" con la casilla de verificación (checkbox) de la versión que proporcionamos arriba.
 
-If the user checks (say) **G** and **PG** and then redisplays the list, the checkboxes that were used to filter the output should appear checked when the list is redisplayed. This will require you to modify the checkbox form slightly from the version we provided above. 
+La primera vez que el usuario visita la página, todas las casillas de verificación se deben marcar por defecto (para que el usuario vea todas las películas). Por ahora, ignora el caso cuando el usuario desactive todas las casillas de verificación; en la siguiente parte se llegará  a  esto.
 
-The first time the user visits the page, all checkboxes should be checked by default (so the user will see all movies). For now, ignore the case when the user unchecks all checkboxes--you will get to this in the next part. 
 
-Reminder: Don't put code in your views! Set up an instance variable in the controller that remembers which ratings were actually used to do the filtering, and make that variable available to the view so that the appropriate boxes can be pre-checked when the index view is reloaded. 
+Recordatorio: Sigue las recomendaciones del patron MVC y ¡No pongas código en sus vistas! . Configura una variable de instancia en el controlador que recuerde qué clasificaciones se usaron realmente para hacer el filtrado, y pon esa variable a disposición de la vista para que los recuadros apropiados se puedan verificar previamente cuando se vuelva a cargar la vista del índice.
 
-You'll submit this part after you deploy on Heroku and when you supply your Heroku deployment URL in part 3.  But you can commit all the changes you have made so far to git, deploy them to Heroku and check that they work on Heroku before moving on to the next section:
+Puedes hacer commitnde todos los cambios que hayas hecho hasta ahora en Git, implementarlos en Heroku y verificar que funcionen en Heroku antes de pasar a la siguiente sección:
+
 
 ```sh
 $ git commit -am "part 2 complete"
 $ git push heroku master
 ```
-
-Next: [Part 3: Remember the sorting and filtering settings](part_3.md)

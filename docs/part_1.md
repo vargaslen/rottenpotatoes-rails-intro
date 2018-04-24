@@ -1,8 +1,11 @@
-## Part 1: Sort the list of movies (15 points)
+## Parte 1: ordena la lista de películas (15 puntos)
 
-On the list of all movies page, make the column headings for "Movie Title" and "Release Date" into clickable links. Clicking one of them should cause the list to be reloaded but sorted in ascending order on that column. For example, clicking the "release date" column heading should redisplay the list of movies with the earliest-released movies first; clicking the "title" header should list the movies alphabetically by title. (For movies whose names begin with non-letters, the sort order should match the behavior of `String#<=>`.)
+En la lista de todas las páginas de películas, haga que los títulos de las columnas "Título de película" y "Fecha de lanzamiento" se conviertan en enlaces clicables. Al hacer clic en uno de ellos, la lista debe volver a cargarse, pero debe ordenarse en orden ascendente en esa columna. Por ejemplo, al hacer clic en el encabezado de la columna "fecha de publicación", primero debe volver a mostrar la lista de películas con las películas más antiguas; hacer clic en el encabezado "título" debería mostrar las películas alfabéticamente por título. (Para las películas cuyos nombres comienzan con letras que no son, el orden de clasificación debe coincidir con el comportamiento de `String # <=>`.)
 
-When the listing page is redisplayed with sorting-on-a-column enabled, the column header that was selected for sorting should appear with a yellow background, as shown below. You should do this by setting controller variables that are used to conditionally set the CSS class of the appropriate table heading to `hilite`, and pasting this simple CSS into RottenPotatoes `app/assets/stylesheets/default.css` file:
+
+Cuando la página de películas se vuelve a mostrar con "el orden por una columna" habilitado, el encabezado de columna que se seleccionó para ordenar debería aparecer con un fondo amarillo, como se muestra a continuación. Deberás hacer esto estableciendo variables de controlador que se usen para establecer condicionalmente la clase CSS del encabezado apropiado de la tabla  a `hilite`, y pegar este simple CSS en el archivo` app / assets / stylesheets / default.css` de RottenPotatoes:
+
+
 
 ```css
 table#movies th.hilite {
@@ -10,31 +13,26 @@ table#movies th.hilite {
 }
 ```
 
-The result should look something like this:
+El resultado debería verse más o menos así:
 
 ![](https://github.com/saasbook/hw-rails-intro/blob/master/table-header-screenshot.png)
 
-**IMPORTANT for grading purposes:**
 
-The link (that is, the `<a>` tag) for sorting by "title" should have the HTML element id `title_header`, and the link for sorting by release date should have the HTML element id `release_date_header`.  The table containing the list of movies should have the HTML element id `movies` (this has already been set for you by the starter code).
+### Sugerencias y advertencias:
 
-### Hints and caveats:
+* Las vistas actuales de "RottenPotatoes"  usan el "helper" de Rutas basadas en recursos provisto por Rails: `movies_path` para generar el URI correcto para la página de índice de películas. Puede que te resulte útil saber que si le pasas a este método auxiliar  un hash de parámetros adicionales, esos parámetros serán analizados por Rails y estarán disponibles en el hash `params[]`.
 
-* The current RottenPotatoes views use the Rails-provided "resource-based routes" helper `movies_path` to generate the correct URI for the movies index page. You may find it helpful to know that if you pass this helper method a hash of additional parameters, those parameters will be parsed by Rails and available in the `params[]` hash.  
+* Las bases de datos son bastante buenas para devolver colecciones de filas ordenadas de acuerdo con uno o más atributos. Antes de que te apresures a ordenar la colección devuelta desde la base de datos, mira la documentación para `ActiveRecord.order` en (http://api.rubyonrails.org/v4.2.6/)   y ve si puedes hacer que la base de datos  haga el trabajo para ti
 
-* Databases are pretty good at returning collections of rows in sorted order according to one or more attributes. Before you rush to sort the collection returned from the database, look at the [documentation](http://api.rubyonrails.org/v4.2.6/) for `ActiveRecord.order` and see if you can get the database to do the work for you.
+* ¡No pongas código en tus vistas! La vista no debería tener que ordenar la colección en sí; su trabajo es solo mostrar cosas. El controlador debería dar una cucharada a la vista exactamente con lo que se mostrará.
 
-* Don't put code in your views! The view shouldn't have to sort the collection itself--its job is just to show stuff. The controller should spoon-feed the view exactly what is to be displayed.  
 
-### Submission
+### Sumisión
 
-You'll submit the code for this part after you deploy on Heroku and when you supply your Heroku deployment URL in part 3.
+Por ahora, realiza todos los cambios que hayas realizado hasta el momento e impleméntalos para verificar que funcionen en Heroku antes de pasar a la siguiente sección:
 
-For now, commit all the changes you have made so far, and deploy them to check that they work on Heroku before moving on to the next section:
 
 ```sh
 $ git commit -am "part 1 complete"
 $ git push heroku master
 ```
-
-Next: [Part 2: Filter the list of movies by rating](part_2.md)
