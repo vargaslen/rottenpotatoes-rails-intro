@@ -37,7 +37,7 @@ La primera vez que el usuario visita la página, todas las casillas de verificac
 
 Recordatorio: Sigue las recomendaciones del patron MVC y ¡No pongas código en sus vistas! . Configura una variable de instancia en el controlador que recuerde qué clasificaciones se usaron realmente para hacer el filtrado, y pon esa variable a disposición de la vista para que los recuadros apropiados se puedan verificar previamente cuando se vuelva a cargar la vista del índice.
 
-Puedes hacer commitnde todos los cambios que hayas hecho hasta ahora en Git, implementarlos en Heroku y verificar que funcionen en Heroku antes de pasar a la siguiente sección:
+Puedes hacer commit de todos los cambios que hayas hecho hasta ahora en Git, implementarlos en Heroku y verificar que funcionen en Heroku antes de pasar a la siguiente sección:
 
 
 ```sh
