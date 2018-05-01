@@ -1,29 +1,29 @@
 
-## Part 3: Remember the sorting and filtering settings (70 points)
+## Parte 3: Recordar la configuración de ordenamiento y filtrado
 
-OK, so the user can now click on the "Movie Title" or "Release Date" headings and see movies sorted by those columns, and can additionally use the checkboxes to restrict the listing to movies with certain ratings only. And we have preserved RESTfulness, because the URI itself always contains the parameters that will control sorting and filtering. 
+OK, entonces el usuario ahora puede hacer clic en los títulos "Título de la película" o "Fecha de lanzamiento" y ver las películas ordenadas por esas columnas, y además puede usar las casillas de verificación para restringir la inclusión de películas solo con ciertas clasificaciones (censuras). Y hemos conservado RESTfulness, porque el URI en sí mismo siempre contiene los parámetros que controlarán ordenamiento y el filtrado.
 
-The last step is to remember these settings. That is, if the user has selected any combination of column sorting and restrict-by-rating constraints, and then the user clicks to see the details of one of the movies (for example), when she clicks the Back to Movie List on the detail page, the movie listing should "remember" her sorting and filtering settings from before. 
+El último paso es recordar estas configuraciones. Es decir, si el usuario ha seleccionado cualquier combinación de ordenamiento de columnas y de restricción por clasificación, y luego que el usuario hace clic para ver los detalles de una de las películas (por ejemplo), cuando hace clic en Volver a la lista de películas desde la página de detalles, la lista de películas debería "recordar" su configuración de ordenamiento y filtrado de antes.
 
-(Clicking away from the list to see the details of a movie is only one example; the settings should be remembered regardless what actions the user takes, so that any time she visits the index page, the settings are correctly reinstated.) 
+(Hacer clic fuera de la lista para ver los detalles de una película es solo un ejemplo; la configuración debe recordarse independientemente de las acciones que realice, de modo que cada vez que visite la página de índice, la configuración se restablezca correctamente).
 
-The best way to do the "remembering" will be to use the `session[]` hash. The session is like the `flash[]`, except that once you set something in the `session[]` it is remembered "forever" until you nuke the session with `session.clear` or selectively delete things from it with `session.delete(:some_key)`. That way, in the `index` method, you can selectively apply the settings from the `session[]` even if the incoming URI doesn’t have the appropriate `params[]` set. 
+La mejor manera de "recordar" será usando el hash `session[]`, session[] es como `flash[]`, excepto que una vez que se configura algo en `sesión[]` se recuerda "para siempre" hasta que borras la sesión con `session.clear` o eliminas cosas selectivamente de ella con `session.delete(:alguna_clave)`. De esta forma, en el método `index`, puedes aplicar selectivamente las configuraciones de session[]   incluso si el URI entrante no tiene el conjunto apropiado de params[] .
 
-### Hints and caveats
+### Consejos y advertencias
 
-If the user explicitly includes new sorting/filtering settings in `params[]`, the session should not override them. Instead, these new settings should be remembered in the session.
+Si el usuario incluye explícitamente nuevas configuraciones de ordenamiento/filtrado en `params[]`, la sesión no debe anularlas. En cambio, estas nuevas configuraciones deberían tomar precedencia y maantenerse en la sesión.
 
-If a user unchecks all checkboxes, use the settings stored in the `session[]` hash, since it doesn't make sense for a user to uncheck all the boxes. 
+Si un usuario desmarca todas las casillas de verificación, usa la configuración almacenada en el hash `session[]`, ya que no tiene sentido que un usuario desmarque todas las casillas.
 
-To be RESTful, we want to preserve the property that a URI that results in a sorted/filtered view always contains the corresponding sorting/filtering parameters. Therefore, if you find that the incoming URI is lacking the right `params[]` and you're forced to fill them in from the `session[]`, the RESTful thing to do is to `redirect_to` the new URI containing the appropriate parameters. There is an important corner case to keep in mind here, though: if the previous action had placed a message in the `flash[]` to display after a redirect to the movies page, your additional redirect will delete that message and it will never appear, since the `flash[]` only survives across a single redirect. To fix this, use `flash.keep` right before your additional redirect. 
+Para que sea RESTful, queremos preservar la propiedad de que un URI que da como resultado una vista ordenada/filtrada siempre contiene los parámetros de ordenamiento/filtrado correspondientes. Por lo tanto, si encuentras que el URI entrante carece de los `params[]` correctos y estás obligado a rellenarlos desde la `sesión[]`, lo apropiado que debes hacer es un `redirect_to` al nuevo URI y que contenga los parámetros apropiados. Sin embargo, hay que tener en cuenta un importante ca extremo: si la acción anterior había colocado un mensaje en `flash[]` para mostrar después de un redireccionamiento a la página de películas, tu redirección adicional (redirect_to) eliminará ese mensaje y nunca aparecerá, ya que `flash[]` solo sobrevive a través de una sola redirección. Para arreglar esto, usa `flash.keep` justo antes de tu redireccionamiento adicional.
 
-### When you're done with this part
 
-Deploy to Heroku by following the same process as before:
+
+### Cuando hayas terminado con esta parte
+
+Implementa en Heroku siguiendo el mismo proceso que antes:
 
 ```sh
 $ git commit -am "part 3 complete"
 $ git push heroku master
 ```
-
-Next: [Submission](../README.md#how-to-submit-when-youre-all-done)
