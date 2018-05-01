@@ -1,6 +1,6 @@
 ## Parte 0 (B): Preparación: implementar en Heroku
 
-Si ya se ha desplegado en Heroku, simplemente crear un nuevo contenedor de aplicaciones con `heroku create`. Si esta es la primera vez que se despliega en Heroku, tendrás que hacer dos cosas. Primero, regístrarte para obtener una cuenta gratuita de Heroku  (http://heroku.com). A continuación, configura las claves `ssh` para comunicarse de forma segura con Heroku para implementar aplicaciones. Los tres comandos básicos que necesitas son los siguientes, pero consula la página de Heroku: (https://devcenter.heroku.com/articles/heroku-cli) para obtener más detalles.
+Si ya tienes cuenta en Heroku, simplemente crea un nuevo contenedor de aplicaciones con `heroku create`. Si esta es la primera vez que se trabajas en Heroku, tendrás que hacer dos cosas. Primero, regístrarte para obtener una cuenta gratuita de Heroku  (http://heroku.com). A continuación, configura las claves `ssh` para comunicarse de forma segura con Heroku para implementar aplicaciones. Los tres comandos básicos que necesitas son los siguientes, pero consulta la página de Heroku: (https://devcenter.heroku.com/articles/heroku-cli) para obtener más detalles.
 
 
 ```sh
@@ -8,7 +8,7 @@ $ ssh-keygen -t rsa
 $ heroku login
 $ heroku keys:add
 ```
-Una vez que las claves estén configuradas (un proceso único), debería poder crear un "contenedor de aplicaciones" en Heroku en el que desplegará RottenPotatoes:
+Una vez que las claves estén configuradas (un proceso único), debería poder crear un "contenedor de aplicaciones" en Heroku en el que desplegarás RottenPotatoes:
 
 
 

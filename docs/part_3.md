@@ -11,11 +11,11 @@ La mejor manera de "recordar" será usando el hash `session[]`, session[] es com
 
 ### Consejos y advertencias
 
-Si el usuario incluye explícitamente nuevas configuraciones de ordenamiento/filtrado en `params[]`, la sesión no debe anularlas. En cambio, estas nuevas configuraciones deberían tomar precedencia y maantenerse en la sesión.
+Si el usuario incluye explícitamente nuevas configuraciones de ordenamiento/filtrado en `params[]`, la sesión no debe anularlas. En cambio, estas nuevas configuraciones deberían tomar precedencia y mantenerse en la sesión.
 
 Si un usuario desmarca todas las casillas de verificación, usa la configuración almacenada en el hash `session[]`, ya que no tiene sentido que un usuario desmarque todas las casillas.
 
-Para que sea RESTful, queremos preservar la propiedad de que un URI que da como resultado una vista ordenada/filtrada siempre contiene los parámetros de ordenamiento/filtrado correspondientes. Por lo tanto, si encuentras que el URI entrante carece de los `params[]` correctos y estás obligado a rellenarlos desde la `sesión[]`, lo apropiado que debes hacer es un `redirect_to` al nuevo URI y que contenga los parámetros apropiados. Sin embargo, hay que tener en cuenta un importante ca extremo: si la acción anterior había colocado un mensaje en `flash[]` para mostrar después de un redireccionamiento a la página de películas, tu redirección adicional (redirect_to) eliminará ese mensaje y nunca aparecerá, ya que `flash[]` solo sobrevive a través de una sola redirección. Para arreglar esto, usa `flash.keep` justo antes de tu redireccionamiento adicional.
+Para que sea "RESTful", queremos preservar la propiedad de que un URI que da como resultado una vista ordenada/filtrada siempre contiene los parámetros de ordenamiento/filtrado correspondientes. Por lo tanto, si encuentras que el URI entrante carece de los `params[]` correctos y estás obligado a rellenarlos desde la `sesión[]`, lo apropiado que debes hacer es un `redirect_to` al nuevo URI y que contenga los parámetros apropiados. Sin embargo, hay que tener en cuenta un importante caso extremo: si la acción anterior había colocado un mensaje en `flash[]` para mostrar después de un redireccionamiento a la página de películas, tu redirección adicional (redirect_to) eliminará ese mensaje y nunca aparecerá, ya que `flash[]` solo sobrevive a través de una sola redirección. Para arreglar esto, usa `flash.keep` justo antes de tu redireccionamiento adicional.
 
 
 

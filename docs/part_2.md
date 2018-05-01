@@ -1,10 +1,10 @@
 ## Parte 2: filtrar la lista de películas por calificación
 
-Mejora RottenPotatoes de la siguiente manera. En la parte superior de la lista de Todas las películas, agrega algunas casillas de verificación (checkboxes) que le permitan al usuario filtrar la lista para mostrar solo películas con ciertas clasificaciones:
+Mejora RottenPotatoes de la siguiente manera. En la parte superior de la lista de Todas las películas, agrega algunas casillas de verificación (checkboxes) que le permitan al usuario filtrar la lista para mostrar solo películas con ciertas clasificaciones (censuras):
 
 (https://github.com/saasbook/hw-rails-intro/blob/master/filter-screenshot.png)
 
-Cuando se presione el botón Actualizar, se vuelve a mostrar la lista de películas con solo aquellas  cuyas clasificaciones fueron marcadas.
+Cuando se presione el botón Actualizar (Refresh), se vuelve a mostrar la lista de películas con solo aquellas  cuyas clasificaciones fueron marcadas.
 
 Esto requerirá un par de piezas de código. Proporcionamos el código que genera el formulario de casillas de verificación (checkboxes), que puedes incluir en la plantilla index.html.haml:
 
@@ -16,7 +16,8 @@ Esto requerirá un par de piezas de código. Proporcionamos el código que gener
     = check_box_tag "ratings[#{rating}]"
   = submit_tag 'Refresh'
 ```
-PERO, tienes que trabajar un poco para usar el código anterior: como puedes ver, se espera que la variable `@all_ratings` contenga una colección enumerable de todos los valores posibles para una clasificación de películas, tales como: ['G' , 'PG', 'PG-13', 'R'] . Un método del controlador necesita configurar esta variable. Y dado que los valores posibles de las clasificaciones de películas son realmente responsabilidad del modelo de película, es mejor si el controlador establece esta variable consultando el modelo. Por lo tanto, debes crear un método de clase: `Movie` que devuelva un valor apropiado para esta colección.
+
+PERO, tienes que trabajar un poco para usar el código anterior: como puedes ver, se espera que la variable `@all_ratings` contenga una colección enumerable de todos los valores posibles para una clasificación de películas, tales como: ['G' , 'PG', 'PG-13', 'R'] . Un método del controlador necesita configurar esta variable. Y dado que los valores posibles de las clasificaciones de películas son realmente responsabilidad del modelo de película, es mejor si el controlador actualiza esta variable consultando el modelo. Por lo tanto, debes crear un método de clase: `Movie` que devuelva un valor apropiado para esta colección.
 
 También necesitarás un código que sepa (i) cómo averiguar qué casillas ha marcado el usuario y (ii) cómo restringir la consulta de la base de datos en función de ese resultado.
 
@@ -35,7 +36,7 @@ Si el usuario marca (digamos) ** G ** y ** PG ** y luego vuelve a mostrar la lis
 La primera vez que el usuario visita la página, todas las casillas de verificación se deben marcar por defecto (para que el usuario vea todas las películas). Por ahora, ignora el caso cuando el usuario desactive todas las casillas de verificación; en la siguiente parte se llegará  a  esto.
 
 
-Recordatorio: Sigue las recomendaciones del patron MVC y ¡No pongas código en sus vistas! . Configura una variable de instancia en el controlador que recuerde qué clasificaciones se usaron realmente para hacer el filtrado, y pon esa variable a disposición de la vista para que los recuadros apropiados se puedan verificar previamente cuando se vuelva a cargar la vista del índice.
+Recordatorio: Sigue las recomendaciones del patron MVC y ¡No pongas mucho código en tus vistas! . Configura una variable de instancia en el controlador que recuerde qué clasificaciones se usaron realmente para hacer el filtrado, y pon esa variable a disposición de la vista para que los recuadros apropiados se puedan verificar previamente cuando se vuelva a cargar la vista del índice.
 
 Puedes hacer commit de todos los cambios que hayas hecho hasta ahora en Git, implementarlos en Heroku y verificar que funcionen en Heroku antes de pasar a la siguiente sección:
 

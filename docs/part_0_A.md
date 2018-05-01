@@ -1,6 +1,6 @@
 Parte 0 (A): Preparación: tener la app RottenPotatoes funcionando localmente.
 
-La aplicación inicial de RottenPotatoes que utilizarás está en otro repositorio público (en github.com): vargaslen / rottenpotatoes-rails-intro. Haz fork de  ese repositorio en tu propia cuenta de GitHub, y luego clona tu repositorio:
+La aplicación inicial de RottenPotatoes que utilizarás está en otro repositorio público (en  github.com): vargaslen / rottenpotatoes-rails-intro. Haz fork de  ese repositorio en tu propia cuenta de GitHub, y luego clona tu repositorio:
 
 $ git clone git@github.com:your_github_username/rottenpotatoes-rails-intro.git
 
