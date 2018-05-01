@@ -15,10 +15,15 @@ class MoviesController < ApplicationController
     @order=params[:order]
     @all_ratings=Movie.pluck(:rating).uniq
     if params[:ratings].eql?(nil)
-      then
-        @filt = @all_ratings
+      then if session[:ratings].eql?(nil)
+              then
+                @filt = @all_ratings
+              else
+                @filt = session[:ratings]
+              end
       else
         @filt=params[:ratings].keys
+        session[:ratings] = @filt
     end
     @movies = Movie.where("rating IN (?)",@filt).order(params[:order])
   end
