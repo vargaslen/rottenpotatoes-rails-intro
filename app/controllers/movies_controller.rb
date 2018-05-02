@@ -12,20 +12,22 @@ class MoviesController < ApplicationController
 
   def index
 
-    @order=params[:order]
+    @order=params[:order].eql?(nil)?session[:order]:params[:order]
+    session[:order] = @order
     @all_ratings=Movie.pluck(:rating).uniq
     if params[:ratings].eql?(nil)
-      then if session[:ratings].eql?(nil)
+      then if params[:commit]==("Refresh")
               then
                 @filt = @all_ratings
               else
                 @filt = session[:ratings]
               end
       else
-        @filt=params[:ratings].keys
-        session[:ratings] = @filt
+        @filt=params[:commit]==("Refresh")?params[:ratings].keys : session[:ratings]
+
     end
-    @movies = Movie.where("rating IN (?)",@filt).order(params[:order])
+    @movies = Movie.where("rating IN (?)",@filt).order(@order)
+    session[:ratings] = @filt
   end
 
   def new
