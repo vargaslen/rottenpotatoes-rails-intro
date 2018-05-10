@@ -27,5 +27,7 @@
 
 = link_to 'Add new movie', new_movie_path
 %p
-  Esto es filt aqui: 
-  = @filt
+  En seguida el modelo Movie.all:
+  - Movie.all.each do |s|
+    = s.to_s
+  
