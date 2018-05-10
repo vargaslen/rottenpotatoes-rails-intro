@@ -20,15 +20,27 @@ class MoviesController < ApplicationController
               then
                 @filt = @all_ratings
               else
-                @filt = session[:ratings]
+                if ! session[:ratings].eql?(nil)
+                  @filt= session[:ratings]
+                else
+                  @filt = @all_ratings
+                end 
               end
       else
-        @filt=params[:commit]==("Refresh")?params[:ratings].keys : session[:ratings]
+        if params[:commit]==("Refresh") then
+          @filt=params[:ratings].keys
+        else
+          if ! session[:ratings].eql?(nil)
+            @filt= session[:ratings]
+          else
+            @filt = @all_ratings
+          end
+
 
 
       end
     @movies = Movie.where("rating IN (?)",@filt).order(@order)
-    @filt = @all_ratings if @filt.eql?(nil)
+
     session[:ratings] = @filt
 
   end

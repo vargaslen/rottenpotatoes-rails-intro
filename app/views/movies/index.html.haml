@@ -8,8 +8,7 @@
     = check_box_tag("ratings[#{rating}]" ,1, if  @filt.include?(rating) then true else false end)
 
   = submit_tag 'Refresh'
-  @all_ratings:
-  = @all_ratings
+
 
 
 %table#movies
