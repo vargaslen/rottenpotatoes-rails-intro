@@ -28,4 +28,5 @@
 = link_to 'Add new movie', new_movie_path
 %p
   En seguida el modelo Movie.all:
-  = Movie.all
+  - Movie.all.each do |e|
+    e.to_a.to_s
