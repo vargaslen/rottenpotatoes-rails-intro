@@ -25,9 +25,10 @@ class MoviesController < ApplicationController
       else
         @filt=params[:commit]==("Refresh")?params[:ratings].keys : session[:ratings]
 
-    end
+      end
     @movies = Movie.where("rating IN (?)",@filt).order(@order)
     session[:ratings] = @filt
+    byebug
   end
 
   def new
