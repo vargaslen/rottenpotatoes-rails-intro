@@ -6,8 +6,9 @@
   - @all_ratings.each do |rating|
     = rating
     = #check_box_tag("ratings[#{rating}]" ,1, if  @filt.include?(rating) then true else false end)
-  = puts("filt: #{@filt}")  
+
   = submit_tag 'Refresh'
+  = puts("filt: #{@filt}")
 
 %table#movies
   %thead
