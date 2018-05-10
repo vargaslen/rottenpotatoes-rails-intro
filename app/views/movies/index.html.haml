@@ -5,7 +5,7 @@
   Include:
   - @all_ratings.each do |rating|
     = rating
-    = #check_box_tag("ratings[#{rating}]" ,1, if  @filt.include?(rating) then true else false end)
+    = check_box_tag("ratings[#{rating}]" ,1, if  @filt.include?(rating) then true else false end)
 
   = submit_tag 'Refresh'
   @all_ratings:
@@ -28,7 +28,3 @@
         %td= link_to "More about #{movie.title}", movie_path(movie)
 
 = link_to 'Add new movie', new_movie_path
-%p
-  En seguida el modelo Movie.all:
-  - Movie.all.each do |e|
-    = e.inspect
