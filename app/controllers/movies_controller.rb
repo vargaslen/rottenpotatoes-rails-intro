@@ -28,7 +28,7 @@ class MoviesController < ApplicationController
       end
     @movies = Movie.where("rating IN (?)",@filt).order(@order)
     session[:ratings] = @filt
-    byebug
+    
   end
 
   def new
